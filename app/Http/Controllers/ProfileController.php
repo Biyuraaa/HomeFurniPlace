@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Category;
-
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -40,39 +40,58 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $user = $request->user();
-        $user->fill($request->validated());
+        $user = Auth::user();
+        $request->validated();
 
         try {
-
+            $userImage = $user->image;
             if ($request->hasFile('image')) {
-                // Hapus gambar lama jika ada
-                if ($user->image) {
-                    Storage::delete('public/images/users/' . $user->image);
-                }
-
-                // Simpan gambar baru
-                $image = $request->file('image');
-                $imageName = $user->name . '_' . time() . '.' . $image->getClientOriginalExtension();
-                $image->storeAs('public/images/users/', $imageName);
-
-                $user->image = $imageName;
+                $userImage = $this->handleFileUpload(
+                    $request,
+                    'image',
+                    'public/images/users/',
+                    $user->image
+                );
             }
+            $user->update([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'date_of_birth' => $request->date_of_birth,
+                'image' => $userImage,
+            ]);
 
-            if ($user->isDirty('email')) {
-                $user->email_verified_at = null;
-            }
-
-            $user->save();
-            if (Auth::user()->role == 'admin') {
-                return Redirect::route('profile.index')->with('status', 'profile-updated');
+            if (Auth::user()->role == 'admin' or Auth::user()->role == 'seller') {
+                return redirect()->route('profile.index')->with('status', 'Profile updated successfully');
             } else {
-                return Redirect::route('profile-user.index')->with('status', 'profile-updated');
+                return redirect()->route('profile-user.index')->with('status', 'Profile updated successfully');
             }
-        } catch (\Throwable $th) {
-            return Redirect::route('profile.index')->with('status', 'profile-updated-failed');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->route('profile.index')->with('status', 'Profile update failed');
         }
     }
+
+    private function handleFileUpload($request, $fieldName, $path, $existingFile = null): ?string
+    {
+        if ($request->hasFile($fieldName)) {
+            if ($existingFile) {
+                Storage::delete($path . $existingFile);
+            }
+            $file = $request->file($fieldName);
+            $fileName = $this->generateUniqueFileName($file, $request->input('name', 'file'));
+            $file->storeAs($path, $fileName);
+            return $fileName;
+        }
+        return $existingFile;
+    }
+
+    private function generateUniqueFileName($file, $prefix = ''): string
+    {
+        $extension = $file->getClientOriginalExtension();
+        return $prefix . '-' . uniqid() . '.' . $extension;
+    }
+
 
 
     /**

@@ -13,12 +13,13 @@ class PageController extends Controller
     public function index()
     {
         $categories = \App\Models\Category::all();
-        $newProducts = \App\Models\Product::latest()->take(4)->get();
-        $lowStockProducts = \App\Models\Product::where('stock', '>', 0)
+        $newProducts = Product::latest()->take(6)->get();
+        $lowStockProducts = Product::where('stock', '>', 0)
             ->orderBy('stock', 'asc')
             ->take(2)
             ->get();
-        return view('pages.welcome', compact('categories', 'newProducts', 'lowStockProducts'));
+        $products = Product::all();
+        return view('pages.welcome', compact('categories', 'newProducts', 'lowStockProducts', 'products'));
     }
 
     public function products(Request $request)
@@ -35,7 +36,7 @@ class PageController extends Controller
             ->withAvg('ratings', 'rating')            // Calculate the average rating per product
             ->orderBy('ratings_count', 'desc')        // Sort by the number of ratings
             ->orderBy('ratings_avg_rating', 'desc')   // Then sort by average rating
-            ->take(4)                                // Limit to top 10 products
+            ->take(6)                                // Limit to top 10 products
             ->get();
         return view('pages.products.index', [
             'categories' => \App\Models\Category::all(),
