@@ -1,0 +1,580 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+* {
+    box-sizing: border-box;
+    font-family: "Source Sans 3", sans-serif;
+}
+.loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.loader {
+    animation: rotate 1s infinite;
+    height: 50px;
+    width: 50px;
+}
+
+.loader:before,
+.loader:after {
+    border-radius: 50%;
+    content: "";
+    display: block;
+    height: 20px;
+    width: 20px;
+}
+.loader:before {
+    animation: ball1 1s infinite;
+    background-color: #fff;
+    box-shadow: 30px 0 0 black;
+    margin-bottom: 10px;
+}
+.loader:after {
+    animation: ball2 1s infinite;
+    background-color: black;
+    box-shadow: 30px 0 0 #fff;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg) scale(0.8);
+    }
+    50% {
+        transform: rotate(360deg) scale(1.2);
+    }
+    100% {
+        transform: rotate(720deg) scale(0.8);
+    }
+}
+
+@keyframes ball1 {
+    0% {
+        box-shadow: 30px 0 0 black;
+    }
+    50% {
+        box-shadow: 0 0 0 black;
+        margin-bottom: 0;
+        transform: translate(15px, 15px);
+    }
+    100% {
+        box-shadow: 30px 0 0 black;
+        margin-bottom: 10px;
+    }
+}
+
+@keyframes ball2 {
+    0% {
+        box-shadow: 30px 0 0 #fff;
+    }
+    50% {
+        box-shadow: 0 0 0 #fff;
+        margin-top: -20px;
+        transform: translate(15px, 15px);
+    }
+    100% {
+        box-shadow: 30px 0 0 #fff;
+        margin-top: 0;
+    }
+}
+
+.top-header {
+    height: 40px;
+    width: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+    font-family: "Source Sans 3", sans-serif;
+}
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 150px 30px 150px;
+    border-bottom: 1px solid rgb(196, 196, 196);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.header-container .logo {
+    font-family: "Kumbh Sans", sans-serif !important;
+    font-weight: bolder;
+    font-size: 2rem;
+    cursor: pointer;
+}
+.logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+    text-decoration: none;
+    font-family: "Arial", sans-serif;
+    transition: color 0.3s ease;
+}
+.logo a:hover {
+    color: #3498db;
+}
+.header-container .input-field {
+    position: relative;
+}
+.header-container .input-field input {
+    height: 2rem;
+    width: 40rem;
+    border: none;
+    background-color: rgb(239, 239, 239);
+    padding: 20px;
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 15px;
+    border-radius: 5px;
+    outline: none;
+}
+.input-field i {
+    position: absolute;
+    right: 20px;
+    top: 13px;
+    color: gray;
+    cursor: pointer;
+}
+.input-field i:hover {
+    color: black;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.login-button,
+.register-button {
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.login-button {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+    border: 2px solid #e9ecef;
+}
+
+.login-button:hover {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.register-button {
+    background-color: #3498db;
+    color: white;
+    border: 2px solid #3498db;
+}
+
+.register-button:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+.user-data {
+    display: flex;
+    gap: 30px;
+    color: gray;
+    cursor: pointer;
+}
+.user-data i {
+    font-size: 20px;
+    transition: all 200ms ease-in-out;
+}
+.user-data i:hover {
+    color: black;
+}
+.user-data .cart-details {
+    position: relative;
+}
+.user-data .cart-details #cart-container {
+    position: absolute;
+    left: -145px;
+    top: 30px;
+    height: 10px;
+    width: 300px;
+    transition: all 200ms ease-in-out;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px gray;
+    background-color: rgb(242, 240, 240);
+    color: rgb(124, 124, 124);
+    opacity: 0;
+    visibility: hidden;
+}
+#cart-container h3 {
+    border-bottom: 2px solid;
+    text-align: center;
+    color: rgb(84, 83, 83);
+}
+#cart-container p {
+    color: rgb(89, 87, 87);
+    text-align: center;
+    font-size: 20px;
+}
+.description-nav-1 {
+    display: flex;
+    justify-content: space-around;
+}
+.description-nav-1 ul {
+    color: gray;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+    display: flex;
+    gap: 30px;
+}
+.description-nav-1 ul li {
+    list-style-type: none;
+}
+.description-nav-1 ul li:hover {
+    color: black;
+}
+.nav-room-container {
+    position: relative;
+}
+.nav-room-container-description {
+    height: 10px;
+    width: 200px;
+    position: absolute;
+    right: -80px;
+    top: 30px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px gray;
+    transition: all 300ms ease-in-out;
+    background-color: rgb(242, 240, 240);
+    visibility: hidden;
+    opacity: 0;
+}
+.nav-room-container-description ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+    text-align: center;
+    padding: 20px;
+}
+.nav-room-container-description ul li {
+    padding: 10px;
+    width: 100%;
+}
+.nav-room-container-description ul li:hover {
+    background-color: rgb(210, 210, 210);
+}
+#nav-product-container-description {
+    height: 100px;
+    width: 200px;
+    position: absolute;
+    right: -80px;
+    top: 30px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px gray;
+    transition: all 300ms ease-in-out;
+    background-color: rgb(242, 240, 240);
+    visibility: hidden;
+    opacity: 0;
+}
+#nav-product-container-description ul {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    text-align: center;
+    padding: 20px;
+}
+#nav-product-container-description ul li {
+    padding: 10px;
+}
+#nav-product-container-description ul li:hover {
+    background-color: rgb(210, 210, 210);
+}
+.living-room-title {
+    margin-left: 245px;
+    font-family: "Poppins", sans-serif;
+    font-weight: bolder;
+}
+.living-room-top-flex-box {
+    display: flex;
+    margin: 20px 245px;
+    justify-content: space-between;
+    border-bottom: 1px solid gray;
+    padding-bottom: 60px;
+}
+.living-room-top-flex-box img {
+    height: 70px;
+    width: 70px;
+    object-position: center;
+    border-radius: 10px;
+    object-fit: cover;
+    transition: all 100ms ease-in-out;
+}
+.living-room-top-flex-box .living-room-option {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Poppins" sans-serif;
+}
+.living-room-option:hover img {
+    transform: scale(1.1);
+}
+.current-best-selling-products-h1 {
+    padding: 10px 245px;
+    font-family: "Poppins";
+    font-weight: bolder;
+}
+.current-best-selling-products {
+    margin: 10px 245px;
+    display: grid;
+    gap: 40px;
+    align-content: center;
+    justify-content: center;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    cursor: pointer;
+}
+.current-best-selling-products {
+    display: flex;
+    gap: 25px;
+    border-bottom: 1px solid gray;
+    padding-bottom: 50px;
+}
+.current-best-selling-product img {
+    height: 250px;
+    width: 250px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+}
+.star-reviews i {
+    color: #ffd43b;
+}
+.current-best-selling-product .current-best-selling-products-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Poppins" sans-serif;
+}
+.current-best-selling-product img {
+    transition: all 100ms ease-in-out;
+}
+.current-best-selling-product:hover img {
+    transform: scale(1.04);
+}
+.living-room-products-filter {
+    padding: 10px 245px;
+    font-family: "Poppins" sans-serif;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 50px;
+}
+.living-room-products-filter .sort {
+    display: flex;
+    gap: 40px;
+}
+.living-room-products {
+    margin: 10px 245px;
+    display: grid;
+    gap: 40px;
+    align-content: center;
+    justify-content: center;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    cursor: pointer;
+}
+.living-room-products a .product img {
+    height: 250px;
+    width: 250px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+    transition: all 100ms ease-in-out;
+}
+.living-room-products a .product:hover img {
+    transform: scale(1.03);
+}
+.count-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 50px;
+}
+.count-container p {
+    font-size: 20px;
+    cursor: pointer;
+}
+.filter-container {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    backdrop-filter: blur(2px);
+    transition: all 300ms ease-in-out;
+    display: none;
+}
+.filter-element {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.filter-description {
+    height: 100%;
+    width: 400px;
+    position: absolute;
+    right: 0px;
+    background-color: rgb(247, 245, 245);
+    transition: all 1000ms ease-in-out;
+}
+.accordion {
+    width: 90%;
+    margin: 10px;
+    font-family: "Poppins";
+    font-size: 20px;
+    border: none;
+    padding: 15px;
+    border-bottom: 1px solid;
+    outline: none;
+    cursor: pointer;
+    background-color: white;
+    text-align: left;
+    transition: all 200ms ease-in-out;
+}
+.accordion:after {
+    content: "\002B";
+    float: right;
+}
+.active:after {
+    content: "\2212";
+}
+.panel {
+    padding: 0 20px;
+    transition: all 300ms ease-in-out;
+    max-height: 0;
+    overflow: hidden;
+    background-color: rgb(231, 231, 231);
+    width: 90%;
+    margin: 0;
+}
+.panel .brand-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    color: gray;
+}
+.panel .brand-container p {
+    font-family: "Poppins";
+    font-size: 20px;
+    cursor: pointer;
+}
+.panel .brand-container p:hover {
+    color: black;
+}
+#apply-filter {
+    border: none;
+    background-color: #5a4098;
+    font-family: "Poppins";
+    color: white;
+    padding: 10px;
+    width: 50%;
+    margin-top: 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+#apply-filter:hover {
+    box-shadow: 0px 0px 10px #5a4098;
+}
+@keyframes rightinside {
+    from {
+        right: -400px;
+    }
+    to {
+        right: 0px;
+    }
+}
+@keyframes rightoutside {
+    from {
+        right: 0px;
+    }
+    to {
+        right: -400px;
+    }
+}
+footer {
+    font-family: sans-serif;
+    padding: 70px 200px 0px 200px;
+    display: flex;
+    justify-content: space-between;
+}
+footer h1 {
+    font-family: sans-serif;
+    font-size: 25px;
+    font-weight: bolder;
+}
+footer .img-container {
+    display: flex;
+    align-items: center;
+}
+footer img {
+    height: 50px;
+    cursor: pointer;
+}
+footer span {
+    color: gray;
+}
+footer p {
+    font-family: sans-serif;
+    font-weight: bolder;
+}
+footer .company h1 {
+    font-family: sans-serif;
+    font-size: 25px;
+}
+footer .company p {
+    font-family: sans-serif;
+    color: gray;
+    font-size: 15px;
+    font-weight: 100;
+    cursor: pointer;
+}
+footer .company p:hover {
+    color: black;
+}
+.contact-us p {
+    font-family: sans-serif;
+    color: gray;
+    font-size: 15px;
+    font-weight: 100;
+    cursor: pointer;
+}
+footer .contact-us p:hover {
+    color: black;
+}
+.contact-us .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+.contact-us .social-links i {
+    font-size: 25px;
+    color: gray;
+    cursor: pointer;
+}
+.contact-us .social-links i:hover {
+    color: black;
+}
